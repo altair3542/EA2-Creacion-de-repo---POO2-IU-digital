@@ -1,18 +1,9 @@
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        // Muestra mínima e inmutable para empezar; no representa una carga grande.
-        List<Registro> registros = List.of(
-                new Registro("U1", "R1", "Centro", "entrada",
-                        LocalDateTime.of(2026, 10, 29, 7, 0)),
-                new Registro("U1", "R1", "Norte", "salida",
-                        LocalDateTime.of(2026, 10, 29, 7, 20)),
-                new Registro("U2", "R2", "Centro", "entrada",
-                        LocalDateTime.of(2026, 10, 29, 8, 0))
-        );
+        List<Registro> registros = DatosSimulados.crear();
 
         System.out.println("TecnoMovil Data - aporte de Santiago");
         System.out.println("Registros de ejemplo: " + registros.size());

@@ -33,9 +33,17 @@ Horas pico:
   07:00 (2 registros)
 ```
 
-`Main.java` carga tres registros y muestra el análisis de estaciones. Los métodos de
-rutas y viajes lanzan `UnsupportedOperationException` hasta que sus responsables
-los implementen; todavía no se invocan desde `Main`.
+`Main.java` obtiene tres registros de `DatosSimulados.crear()` y muestra el análisis
+de estaciones. Los métodos de rutas y viajes lanzan `UnsupportedOperationException`
+hasta que sus responsables los implementen; todavía no se invocan desde `Main`.
+
+La preparación de los ejemplos está en `DatosSimulados.java`, separada del cálculo
+en `AnalisisEstaciones.java` y de la coordinación y presentación en `Main.java`.
+Esto mejora la separación de responsabilidades y permite reutilizar los mismos datos
+en los análisis de Alejandro y Abimael. La lista se crea con `List.of` y no admite
+modificaciones; cada análisis recibe los registros como argumento, sin depender de
+`DatosSimulados`. Esta mejora refuerza el principio de responsabilidad única
+(S de SOLID).
 
 ## Aporte de Santiago
 
