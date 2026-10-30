@@ -1,4 +1,4 @@
-# TecnoMovil Data
+# EA2 Creacion de repo - POO2-IU-digital
 
 Punto de partida para la actividad EA2 de programación funcional en Java.
 Grupo de tres integrantes. Este repositorio contiene únicamente el esqueleto:
@@ -48,8 +48,8 @@ Cada integrante agrega las llamadas y la presentación de sus resultados en
 2. Cada compañero clona el repositorio:
 
    ```sh
-   git clone https://github.com/altair3542/tecnomovil-data.git
-   cd tecnomovil-data
+   git clone https://github.com/altair3542/EA2-Creacion-de-repo---POO2-IU-digital.git
+   cd EA2-Creacion-de-repo---POO2-IU-digital
    git switch -c aporte/estaciones
    ```
 
