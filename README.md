@@ -35,7 +35,7 @@ Reemplazar los nombres pendientes por los del equipo antes de empezar.
 
 | Responsable | Archivo principal | Aporte pendiente |
 | --- | --- | --- |
-| Integrante 1 (nombre pendiente) | `src/AnalisisEstaciones.java` | a) Afluencia por estación; b) Flujo por hora e identificación de horas pico |
+| Santiago | `src/AnalisisEstaciones.java` | a) Afluencia por estación; b) Flujo por hora e identificación de horas pico |
 | Integrante 2 (nombre pendiente) | `src/AnalisisRutas.java` | c) Rutas más utilizadas; f) Detección de rutas críticas |
 | Integrante 3 (nombre pendiente) | `src/AnalisisViajes.java` | d) Estaciones por usuario; e) Tiempo promedio entre estaciones |
 

@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Map;
 
-// Integrante 1: requisitos a y b.
+// Santiago: requisitos a (afluencia por estación) y b (horas pico).
 public class AnalisisEstaciones {
     public static Map<String, Long> afluenciaPorEstacion(List<Registro> registros) {
         // TODO a: contar las entradas por estación con Streams.
