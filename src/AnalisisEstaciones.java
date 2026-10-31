@@ -1,34 +1,33 @@
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import modelo.Registro;
+import Interfaces.IEstacionesUsuariosService;
+import Interfaces.IFlujoTiempoService;
 
 // Santiago: requisitos a (afluencia por estación) y b (horas pico).
 public class AnalisisEstaciones {
-    /** Cuenta validaciones de entrada, no usuarios únicos. No modifica los registros. */
-    public static Map<String, Long> afluenciaPorEstacion(List<Registro> registros) {
-        return Map.copyOf(registros.stream()
-                .filter(registro -> "entrada".equals(registro.accion()))
-                .collect(Collectors.groupingBy(Registro::estacion, Collectors.counting())));
-    }
+        private final List<Registro> registros;
+        private final IEstacionesUsuariosService estacionesService;
+        private final IFlujoTiempoService flujoTiempo;
 
-    /** Cuenta todas las acciones por hora (0 a 23) dentro del día analizado. */
-    public static Map<Integer, Long> flujoPorHora(List<Registro> registros) {
-        return Map.copyOf(registros.stream()
-                .collect(Collectors.groupingBy(
-                        registro -> registro.timestamp().getHour(), Collectors.counting())));
-    }
+        public AnalisisEstaciones(List<Registro> registros,
+                        IEstacionesUsuariosService estacionesService,
+                        IFlujoTiempoService flujoTiempo) {
+                this.registros = List.copyOf(registros);
+                this.estacionesService = estacionesService;
+                this.flujoTiempo = flujoTiempo; 
+        }
 
-    /** Devuelve todas las horas de máximo flujo, ordenadas; sin datos, una lista vacía. */
-    public static List<Integer> horasPico(Map<Integer, Long> flujo) {
-        long maximo = flujo.values().stream()
-                .mapToLong(Long::longValue)
-                .max()
-                .orElse(0L);
+        public Map<String, Long> obtenerAfluenciaPorEstacion() {
+                return estacionesService.afluenciaPorEstacion(registros);
+        }
 
-        return flujo.entrySet().stream()
-                .filter(entrada -> entrada.getValue() == maximo)
-                .map(Map.Entry::getKey)
-                .sorted()
-                .toList();
-    }
+        public Map<Integer, Long> obtenerFlujoPorHora() {
+                return flujoTiempo.flujoPorHora(registros);
+        }
+
+        public List<Integer> obtenerHorasPico() {
+                Map<Integer, Long> flujo = flujoTiempo.flujoPorHora(registros);
+                return flujoTiempo.horasPico(flujo);
+        }
 }
