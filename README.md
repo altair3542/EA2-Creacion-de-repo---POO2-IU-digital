@@ -1,8 +1,9 @@
 # EA2 Creacion de repo - POO2-IU-digital
 
 Punto de partida para la actividad EA2 de programación funcional en Java.
-Grupo de tres integrantes. Este repositorio contiene únicamente el esqueleto:
-las seis operaciones del caso de estudio están pendientes.
+Grupo de tres integrantes. La rama `aporte/estaciones` implementa las operaciones
+de Santiago: afluencia por estación y horas pico. Las operaciones de rutas y viajes
+siguen pendientes para los otros integrantes.
 
 ## Ejecutar
 
@@ -18,26 +19,75 @@ java -cp out Main
 En Windows PowerShell, crear `out` con `New-Item -ItemType Directory -Force out`;
 los comandos de compilación y ejecución son los mismos.
 
-Salida inicial:
+Salida del ejemplo:
 
 ```text
-TecnoMovil Data - esqueleto inicial
+TecnoMovil Data - aporte de Santiago
 Registros de ejemplo: 3
-Las seis operaciones están pendientes de implementar.
+Entradas por estación:
+  Centro: 2
+Flujo por hora (entradas y salidas):
+  07:00: 2
+  08:00: 1
+Horas pico:
+  07:00 (2 registros)
 ```
 
-`Main.java` solo carga tres registros y muestra ese mensaje. Los métodos pendientes
-lanzan `UnsupportedOperationException` hasta que cada integrante los implemente.
+`Main.java` obtiene tres registros de `DatosSimulados.crear()` y muestra el análisis
+de estaciones. Los métodos de rutas y viajes lanzan `UnsupportedOperationException`
+hasta que sus responsables los implementen; todavía no se invocan desde `Main`.
+
+La preparación de los ejemplos está en `DatosSimulados.java`, separada del cálculo
+en `AnalisisEstaciones.java` y de la coordinación y presentación en `Main.java`.
+Esto mejora la separación de responsabilidades y permite reutilizar los mismos datos
+en los análisis de Alejandro y Abimael. La lista se crea con `List.of` y no admite
+modificaciones; cada análisis recibe los registros como argumento, sin depender de
+`DatosSimulados`. Esta mejora refuerza el principio de responsabilidad única
+(S de SOLID).
+
+## Aporte de Santiago
+
+- `afluenciaPorEstacion`: cuenta cada validación de entrada por estación, incluidos
+  ingresos repetidos de un mismo usuario. No cuenta usuarios únicos ni salidas.
+- `flujoPorHora`: cuenta todas las acciones (entradas y salidas) por hora. Se espera
+  una lista de un solo día; el método no separa fechas ni incluye horas sin registros.
+- `horasPico`: recibe el mapa de flujo y devuelve todas las horas de máximo flujo
+  en orden ascendente. Sin datos, devuelve una lista vacía.
+
+Son funciones puras: dependen de sus argumentos, no imprimen y no modifican los
+datos recibidos. `Registro` es inmutable, `Map.copyOf` protege los mapas devueltos y
+`Stream.toList()` devuelve una lista que no admite modificaciones.
+
+Las lambdas describen el filtro de entradas, la extracción de la hora y la selección
+de máximos. `filter`, `map` y `groupingBy` son operaciones de orden superior porque
+reciben funciones. Los pipelines con `stream`, `collect`, `counting`, `max` y `sorted`
+expresan el análisis de forma declarativa. La impresión con `forEach` queda en `Main`,
+separada del cálculo. El agrupamiento usa un acumulador interno del collector, sin
+mutar la lista original ni compartir estado externo.
+
+Estos criterios de conteo están adoptados para este aporte y deben revisarse con el
+equipo antes de la entrega final.
+
+### Verificar el aporte
+
+Después de compilar `src`, ejecutar:
+
+```sh
+javac -encoding UTF-8 -cp out -d out tests/*.java
+java -cp out PruebaAnalisisEstaciones
+```
+
+La verificación usa resultados conocidos para entradas y salidas, ingresos repetidos,
+horas empatadas, una sola hora pico, datos vacíos y conservación de la lista original.
+También comprueba que los resultados no se puedan modificar. No requiere frameworks.
 
 ## Reparto propuesto
 
-Reemplazar los nombres pendientes por los del equipo antes de empezar.
-
-| Responsable | Archivo principal | Aporte pendiente |
+| Responsable | Archivo principal | Aporte |
 | --- | --- | --- |
-| Integrante 1 (nombre pendiente) | `src/AnalisisEstaciones.java` | a) Afluencia por estación; b) Flujo por hora e identificación de horas pico |
-| Integrante 2 (nombre pendiente) | `src/AnalisisRutas.java` | c) Rutas más utilizadas; f) Detección de rutas críticas |
-| Integrante 3 (nombre pendiente) | `src/AnalisisViajes.java` | d) Estaciones por usuario; e) Tiempo promedio entre estaciones |
+| Santiago | `src/AnalisisEstaciones.java` | a) Afluencia por estación; b) Flujo por hora e identificación de horas pico |
+| Alejandro | `src/AnalisisRutas.java` | c) Rutas más utilizadas; f) Detección de rutas críticas |
+| Abimael | `src/AnalisisViajes.java` | d) Estaciones por usuario; e) Tiempo promedio entre estaciones |
 
 Cada integrante agrega las llamadas y la presentación de sus resultados en
 `Main.java` al integrar su aporte. Coordinar esos cambios para evitar conflictos.
