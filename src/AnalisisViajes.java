@@ -23,7 +23,7 @@ public class AnalisisViajes {
         return estaciones.ObtenerEstacionesPorUsuarios(registros);
     }
 
-    public Map<Integer, List<Double>> obtenerTiempoPromedio() {
+    public Map<String, List<Double>> obtenerTiempoPromedio() {
         return tiempos.calcularTiempoPromedioEntreEstaciones(registros);
     }
 }

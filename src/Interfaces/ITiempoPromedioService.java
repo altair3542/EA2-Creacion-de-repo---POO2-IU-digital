@@ -4,5 +4,5 @@ import java.util.Map;
 import modelo.Registro;
 
 public interface ITiempoPromedioService {
-    Map<Integer, List<Double>> calcularTiempoPromedioEntreEstaciones(List<Registro> registros);
+    Map<String, List<Double>> calcularTiempoPromedioEntreEstaciones(List<Registro> registros);
 }
