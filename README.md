@@ -8,42 +8,43 @@ siguen pendientes para los otros integrantes.
 ## Ejecutar
 
 Requiere un JDK 17 o superior. No usa frameworks, Maven ni dependencias externas.
-Desde la carpeta del proyecto:
+
+Desde la carpeta `src` del proyecto:
 
 ```sh
-mkdir -p out
-javac -encoding UTF-8 -d out src/*.java
-java -cp out Main
+mkdir -p ../out
+javac -encoding UTF-8 -d ../out $(find . -name "*.java")
+java -cp ../out Main
 ```
 
-En Windows PowerShell, crear `out` con `New-Item -ItemType Directory -Force out`;
-los comandos de compilación y ejecución son los mismos.
+En Windows PowerShell, ejecutar desde `src`:
 
-Salida del ejemplo:
+```powershell
+New-Item -ItemType Directory -Force -Path ..\out
 
-```text
-TecnoMovil Data - aporte de Santiago
-Registros de ejemplo: 3
-Entradas por estación:
-  Centro: 2
-Flujo por hora (entradas y salidas):
-  07:00: 2
-  08:00: 1
-Horas pico:
-  07:00 (2 registros)
+$archivos = Get-ChildItem -Path . -Recurse -Filter *.java
+javac -encoding UTF-8 -d ..\out $archivos.FullName
+
+java -cp ..\out Main
 ```
 
-`Main.java` obtiene tres registros de `DatosSimulados.crear()` y muestra el análisis
-de estaciones. Los métodos de rutas y viajes lanzan `UnsupportedOperationException`
-hasta que sus responsables los implementen; todavía no se invocan desde `Main`.
+Estos comandos incluyen todos los archivos Java ubicados dentro de `src` y sus subdirectorios, permitiendo compilar correctamente las clases organizadas en paquetes como `Classes`, `Interfaces` y `model`.
 
-La preparación de los ejemplos está en `DatosSimulados.java`, separada del cálculo
-en `AnalisisEstaciones.java` y de la coordinación y presentación en `Main.java`.
-Esto mejora la separación de responsabilidades y permite reutilizar los mismos datos
-en los análisis de Alejandro y Abimael. La lista se crea con `List.of` y no admite
-modificaciones; cada análisis recibe los registros como argumento, sin depender de
-`DatosSimulados`. Esta mejora refuerza el principio de responsabilidad única
-(S de SOLID).
+### Salida del programa
+
+El programa muestra los análisis desarrollados por los integrantes del equipo:
+
+- **Aporte de Abimael:** patrones de viajes por usuario y tiempo promedio de viaje.
+- **Aporte de Santiago:** afluencia por estación, flujo por hora y horas pico.
+- **Aporte de Alejandro:** uso por ruta y detección de rutas críticas.
+
+Los resultados dependen de los registros proporcionados por `DatosSimulados.crear()`.
+
+`Main.java` obtiene los registros de ejemplo mediante `DatosSimulados.crear()` y coordina los análisis de viajes, estaciones y rutas. Cada análisis recibe los registros como argumento y utiliza los servicios correspondientes para realizar los cálculos.
+
+La preparación de los ejemplos está en `DatosSimulados.java`, separada del cálculo en `AnalisisViajes.java`, `AnalisisEstaciones.java` y `AnalisisRutas.java`, mientras que `Main.java` se encarga de la coordinación y presentación de los resultados.
+
+La lista de registros se crea con `List.of`, por lo que no admite modificaciones. Esta separación permite reutilizar los mismos datos en los diferentes análisis y refuerza el principio de responsabilidad única (S de SOLID).
 
 ## Aporte de Santiago
 

@@ -1,17 +1,29 @@
+
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
+
+import modelo.Registro;
+import Interfaces.IEstacionesUsuariosService;
+import Interfaces.ITiempoPromedioService;
 
 // Integrante 3: requisitos d y e.
 public class AnalisisViajes {
-    public static Map<String, List<String>> estacionesPorUsuario(List<Registro> registros) {
-        // TODO d: listar estaciones por usuario respetando el orden de los registros.
-        throw new UnsupportedOperationException("Pendiente: patrones de viaje");
+    private final List<Registro> registros;
+    private final IEstacionesUsuariosService estaciones;
+    private final ITiempoPromedioService tiempos;
+
+    public AnalisisViajes(List<Registro> registros, IEstacionesUsuariosService estaciones,
+            ITiempoPromedioService tiempos) {
+        this.registros = List.copyOf(registros);
+        this.estaciones = estaciones;
+        this.tiempos = tiempos;
     }
 
-    public static OptionalDouble tiempoPromedioEnMinutos(List<Registro> registros) {
-        // TODO e: calcular el promedio entre estaciones consecutivas de cada usuario.
-        // Si no hay trayectos válidos, devolver OptionalDouble.empty().
-        throw new UnsupportedOperationException("Pendiente: tiempo promedio");
+    public Map<String, List<String>> obtenerPatronesViajes() {
+        return estaciones.ObtenerEstacionesPorUsuarios(registros);
+    }
+
+    public Map<String, List<Double>> obtenerTiempoPromedio() {
+        return tiempos.calcularTiempoPromedioEntreEstaciones(registros);
     }
 }
