@@ -1,9 +1,7 @@
 # EA2 Creacion de repo - POO2-IU-digital
 
-Punto de partida para la actividad EA2 de programación funcional en Java.
-Grupo de tres integrantes. La rama `aporte/estaciones` implementa las operaciones
-de Santiago: afluencia por estación y horas pico. Las operaciones de rutas y viajes
-siguen pendientes para los otros integrantes.
+Proyecto de la actividad EA2 de programación funcional en Java, desarrollado por
+Santiago, Alejandro y Abimael. Los seis análisis están integrados en `Main`.
 
 ## Ejecutar
 
@@ -28,7 +26,7 @@ javac -encoding UTF-8 -d ..\out $archivos.FullName
 java -cp ..\out Main
 ```
 
-Estos comandos incluyen todos los archivos Java ubicados dentro de `src` y sus subdirectorios, permitiendo compilar correctamente las clases organizadas en paquetes como `Classes`, `Interfaces` y `model`.
+Estos comandos incluyen todos los archivos Java ubicados dentro de `src` y sus subdirectorios, permitiendo compilar correctamente las clases organizadas en paquetes como `Classes`, `Interfaces` y `modelo`.
 
 ### Salida del programa
 
@@ -40,6 +38,24 @@ El programa muestra los análisis desarrollados por los integrantes del equipo:
 
 Los resultados dependen de los registros proporcionados por `DatosSimulados.crear()`.
 
+La muestra actual contiene 20 registros de cinco usuarios. Con estos datos, la hora
+pico es las 08:00 (cinco registros) y cada ruta tiene dos entradas. Los promedios en
+minutos son U001: 37.5, U002: 35, U003: 22.5, U004: 30 y U005: 47.5.
+
+Las rutas se muestran de mayor a menor número de entradas; los empates se ordenan
+por nombre. En esta simulación, una ruta es crítica cuando sus entradas acumuladas
+en el día superan 10. El programa muestra el umbral utilizado. Es una aproximación
+de uso acumulado: no calcula pasajeros simultáneos ni la capacidad real de un bus.
+El grupo debe confirmar ese criterio para la entrega final.
+
+El tiempo promedio agrupa por el ID completo de cada usuario, ordena por fecha y
+hora y considera pares consecutivos de entrada y salida en estaciones distintas.
+Un usuario sin un trayecto válido conserva una lista vacía de promedios. Los patrones
+de estaciones, en cambio, respetan el orden de aparición de los registros.
+
+Todos los análisis comparten `modelo.Registro` y el enum `modelo.Accion`.
+Los resultados de análisis son mapas y listas que no admiten modificaciones.
+
 `Main.java` obtiene los registros de ejemplo mediante `DatosSimulados.crear()` y coordina los análisis de viajes, estaciones y rutas. Cada análisis recibe los registros como argumento y utiliza los servicios correspondientes para realizar los cálculos.
 
 La preparación de los ejemplos está en `DatosSimulados.java`, separada del cálculo en `AnalisisViajes.java`, `AnalisisEstaciones.java` y `AnalisisRutas.java`, mientras que `Main.java` se encarga de la coordinación y presentación de los resultados.
@@ -47,6 +63,9 @@ La preparación de los ejemplos está en `DatosSimulados.java`, separada del cá
 La lista de registros se crea con `List.of`, por lo que no admite modificaciones. Esta separación permite reutilizar los mismos datos en los diferentes análisis y refuerza el principio de responsabilidad única (S de SOLID).
 
 ## Aporte de Santiago
+
+Los cálculos se encuentran en `Classes/EstacionesUsuario` y `Classes/FlujoTiempo`;
+`AnalisisEstaciones` los coordina mediante sus interfaces.
 
 - `afluenciaPorEstacion`: cuenta cada validación de entrada por estación, incluidos
   ingresos repetidos de un mismo usuario. No cuenta usuarios únicos ni salidas.
@@ -117,13 +136,13 @@ Cada integrante agrega las llamadas y la presentación de sus resultados en
 - Acordar cómo emparejar estaciones para calcular tiempos y tratar registros desordenados.
 - Definir cómo se simula la ocupación para detectar sobrecarga; no confundirla sin
   justificación con el total diario de registros de una ruta.
-- Ampliar los datos simulados después. Los tres ejemplos actuales solo permiten arrancar.
+- Ampliar los datos simulados después. Los 20 registros actuales son una muestra pequeña.
   Si se decide usar `parallelStream()`, comprobar que se conserva el resultado esperado.
 
 ## Pendientes conjuntos para la entrega final
 
 - [ ] Completar nombres de integrantes, grupo, asignatura y docente.
-- [ ] Implementar e integrar las seis operaciones en `main`.
+- [x] Implementar e integrar las seis operaciones en `main`.
 - [ ] Generar un conjunto grande de datos simulados y validar resultados.
 - [ ] Documentar las funciones puras, inmutabilidad, orden superior, lambdas y Streams usados.
 - [ ] Capturar evidencias reales de ejecución de la solución terminada.

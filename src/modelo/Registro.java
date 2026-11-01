@@ -1,6 +1,6 @@
 package modelo;
 import java.time.LocalDateTime;
-// Modelo inmutable. accion debe ser "entrada" o "salida".
+// Modelo inmutable compartido; accion usa Accion.ENTRADA o Accion.SALIDA.
 public record Registro(
         String idUsuario,
         String ruta,
