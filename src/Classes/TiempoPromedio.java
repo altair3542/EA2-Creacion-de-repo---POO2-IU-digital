@@ -2,7 +2,6 @@ package Classes;
 
 import java.time.Duration;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalDouble;
@@ -16,20 +15,13 @@ import modelo.Registro;
 public abstract class TiempoPromedio implements ITiempoPromedioService {
         @Override
         public Map<String, List<Double>> calcularTiempoPromedioEntreEstaciones(List<Registro> registros) {
-                Map<String, List<Registro>> agrupados = registros.stream()
-                                .collect(Collectors.groupingBy(Registro::idUsuario));
-
-                Map<String, List<Double>> resultado = new HashMap<>();
-
-                for (Map.Entry<String, List<Registro>> entry : agrupados.entrySet()) {
-
-                        List<Double> promedioCalculado = calcularPromedio(entry.getValue());
-
-                        resultado.put(entry.getKey(), promedioCalculado);
-                }
-
-                return resultado;
-
+                return registros.stream()
+                                .collect(Collectors.collectingAndThen(
+                                                Collectors.groupingBy(Registro::idUsuario,
+                                                                Collectors.collectingAndThen(
+                                                                                Collectors.toList(),
+                                                                                this::calcularPromedio)),
+                                                Map::copyOf));
         }
 
         private List<Double> calcularPromedio(List<Registro> registrosUsuario) {

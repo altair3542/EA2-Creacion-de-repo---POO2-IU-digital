@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 import modelo.Registro;
 
 public class Main {
@@ -61,15 +62,19 @@ public class Main {
                                 }
                 );
 
-                analisisRutas.obtenerUsoPorRuta().forEach((ruta, total) -> {
-                        System.out.println("Ruta [" + ruta + "] -> " + total + " entradas");
-                });
+                analisisRutas.obtenerUsoPorRuta().entrySet().stream()
+                                .sorted(Map.Entry.<String, Long>comparingByValue().reversed()
+                                                .thenComparing(Map.Entry.comparingByKey()))
+                                .forEach(entrada -> System.out.println(
+                                                "Ruta [" + entrada.getKey() + "] -> "
+                                                                + entrada.getValue() + " entradas"));
 
                 // Requerimiento f: Detección de sobrecarga.
                 System.out.println("=============================================================");
                 System.out.println("=== RUTAS CRÍTICAS ===");
 
                 long umbral = 10;
+                System.out.println("Umbral simulado: más de " + umbral + " entradas por ruta en el día.");
 
                 List<String> rutasCriticas = analisisRutas.obtenerRutasCriticas(umbral);
 
@@ -80,6 +85,5 @@ public class Main {
                                 System.out.println("Ruta sobrecargada: " + ruta);
                         });
                 }
-                // TODO: integrar los aportes de Alejandro (rutas) y Abimael (viajes).
         }
 }

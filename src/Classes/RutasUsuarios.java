@@ -25,6 +25,7 @@ public abstract class RutasUsuarios implements IRutasService {
         return usoPorRuta(registros).entrySet().stream()
                 .filter(entry -> entry.getValue() > umbral)
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .sorted()
+                .toList();
     }
 }
