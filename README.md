@@ -68,19 +68,6 @@ mutar la lista original ni compartir estado externo.
 Estos criterios de conteo están adoptados para este aporte y deben revisarse con el
 equipo antes de la entrega final.
 
-### Verificar el aporte
-
-Después de compilar `src`, ejecutar:
-
-```sh
-javac -encoding UTF-8 -cp out -d out tests/*.java
-java -cp out PruebaAnalisisEstaciones
-```
-
-La verificación usa resultados conocidos para entradas y salidas, ingresos repetidos,
-horas empatadas, una sola hora pico, datos vacíos y conservación de la lista original.
-También comprueba que los resultados no se puedan modificar. No requiere frameworks.
-
 ## Reparto propuesto
 
 | Responsable | Archivo principal | Aporte |
